@@ -15,7 +15,7 @@ public class Passenger implements Serializable {
     private City destination;
     private String date;
     private SeatType flightClass;
-    private String recordId;
+    private static int recordId = 0;
 
 
     public Passenger(String firstName, String lastName, String address, String phone, City destination, String date, SeatType flightClass) {
@@ -26,8 +26,8 @@ public class Passenger implements Serializable {
         this.destination = destination;
         this.date = date;
         this.flightClass = flightClass;
-        recordId = UUID.randomUUID().toString();
-
+        //recordId = UUID.randomUUID().toString();
+        recordId = recordId++;
     }
 
     public String getAddress() {
@@ -60,7 +60,8 @@ public class Passenger implements Serializable {
     }
 
     public String getRecordId() {
-        return recordId;
+        return  String.valueOf(recordId);
+        
     }
 
     @Override

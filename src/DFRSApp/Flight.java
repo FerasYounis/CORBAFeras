@@ -3,8 +3,7 @@ package DFRSApp;
 import java.util.UUID;
 
 public class Flight {
-
-    private String recordId;
+	private static int recordId=0;
     private int economySeatCount;
     private int businessSeatCount;
     private int fitClassSeatCount;
@@ -18,21 +17,24 @@ public class Flight {
 
     public Flight(int economySeatCount, int businessSeatCount, int fitClassSeatCount,
                   City source, City destination, String date) {
+    	
         this.economySeatCount = economySeatCount;
         this.businessSeatCount = businessSeatCount;
         this.fitClassSeatCount = fitClassSeatCount;
         this.source = source;
         this.destination = destination;
         this.date = date;
-        recordId = UUID.randomUUID().toString();
+        recordId = recordId +1;
     }
 
     public Flight() {
-        recordId = UUID.randomUUID().toString();
+    	recordId = recordId +1;
+    	//recordId = UUID.randomUUID().toString();
     }
 
     public String getRecordId() {
-        return recordId;
+    	
+        return String.valueOf(recordId);
     }
 
     public int getEconomySeatCount() {
