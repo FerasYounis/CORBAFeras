@@ -233,10 +233,16 @@ public class DFRSmain {
                     break;
 
                 case 5:
-                    System.out.println("This is will reset all count");
+                	System.out.println("EDIT flight");
                     System.out.println("WHO are You?\n maMTL\n maWDC\n maNDW");
                     String managerCity2 = sd.next();
-                    proxy.resetCount(getUserFromStr(managerCity2));
+                    System.out.println("What is flight id ?");
+                    String flightId3 = sd.next();
+                    System.out.println("What the field name economySeatCount businessSeatCount fitClassSeatCount source destination date");
+                    String fieldName = sd.next();
+                    System.out.println("what is the new value");
+                    String newValue = sd.next();
+                    proxy.editFlightRecord(getUserFromStr(managerCity2), flightId3, fieldName, newValue);
                     
                     break;
             }

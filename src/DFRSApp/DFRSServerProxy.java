@@ -39,7 +39,7 @@ public class DFRSServerProxy {
 		return result;
 	}
 
-	public void editFlightRecord(SystemUser user, String recordID,
+	/*public void editFlightRecord(SystemUser user, String recordID,
 			String fieldName, String newValue) {
 		DFRS server = getServerBasedOnUser(user);
 		logUserOperation(user, "editFlightRecord(" + recordID + "," + fieldName
@@ -47,6 +47,14 @@ public class DFRSServerProxy {
 
 		server.editFlightRecord(recordID, fieldName, newValue);
 
+	}*/
+	public void editFlightRecord(SystemUser user, String recordID,
+			String fieldName, String newValue) {
+		DFRS server = getServerBasedOnUser(user);
+		logUserOperation(user, "editFlightRecord(" + recordID + "," + fieldName
+				+ "," + newValue + ")");
+
+		server.editFlightRecord(recordID, fieldName, newValue);
 	}
 
 	public String addFlight(SystemUser user, int economySeatCount,

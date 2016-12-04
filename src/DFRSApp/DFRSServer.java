@@ -191,6 +191,9 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 				case "date":
 					flight.setDate(newValue);
 					break;
+				case"deleteFlight":
+					flight.equals(null);
+					
 				}
 				break;
 			}
