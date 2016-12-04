@@ -1,18 +1,14 @@
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
 INFO: Manager performed operation : addFlight(11,11,11,WASHINGTON,11/11)
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
 INFO: Manager performed operation : addFlight result: 1
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
 INFO: Manager performed operation : addFlight(12,12,12,WASHINGTON,11/11)
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
 INFO: Manager performed operation : addFlight result: 2
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
 INFO: Manager performed operation : getBookedFlightCount(ECONOMY)
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
-INFO: Manager performed operation : getBookedFlightCount result: MTL 1 +  WDC 0 +  ND 1
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
-INFO: Manager performed operation : resetCount(MONTREAL)
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
-INFO: Manager performed operation : getBookedFlightCount(ECONOMY)
-Dec 03, 2016 10:20:02 PM DFRSApp.Manager logUserOperation
-INFO: Manager performed operation : getBookedFlightCount result: MTL 0 +  WDC 0 +  ND 1
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
+INFO: Manager performed operation : getBookedFlightCount result: MTL 1 +  WDC 0 +  NDL 1
+Dec 04, 2016 12:37:23 AM DFRSApp.Manager logUserOperation
+INFO: Manager performed operation : editFlightRecord(3,ECONOMY,maMTL)

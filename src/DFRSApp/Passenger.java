@@ -27,7 +27,7 @@ public class Passenger implements Serializable {
         this.date = date;
         this.flightClass = flightClass;
         //recordId = UUID.randomUUID().toString();
-        recordId = recordId++;
+        recordId = recordId +1;
     }
 
     public String getAddress() {

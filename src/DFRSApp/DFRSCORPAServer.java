@@ -21,23 +21,34 @@ import org.omg.PortableServer.POAPackage.WrongPolicy;
 public class DFRSCORPAServer implements Runnable {
 
 	
+	final static DFRSServer montrealServer = new DFRSServer(City.MONTREAL);
+    final static DFRSServer nyServer = new DFRSServer(City.WASHINGTON);
+    final static DFRSServer ndServer = new DFRSServer(City.NEW_DELHI);
+    static Thread t = new Thread((DFRSServer)montrealServer);
+    static Thread t2 = new Thread((DFRSServer)nyServer);
+    static Thread t3 = new Thread((DFRSServer)ndServer);
+    
+    
+	public static void wakeupServers(){
+        t.start();
+        t2.start();
+        t3.start();
+		
+	}
 	
+	public void killThread(){
+		t.stop();
+		t2.stop();
+		t3.stop();
+		
+		
+	}
 	
 	public static void main(String[] args) throws ServantAlreadyActive, WrongPolicy, ObjectNotActive, FileNotFoundException, AdapterInactive {
 		// TODO Auto-generated method stub
-	    final DFRSServer montrealServer = new DFRSServer(City.MONTREAL);
-	    final DFRSServer nyServer = new DFRSServer(City.WASHINGTON);
-	    final DFRSServer ndServer = new DFRSServer(City.NEW_DELHI);
-	      	Thread t = new Thread((DFRSServer)montrealServer);
-	        t.start();
+	    
+		wakeupServers();
 	        
-	        Thread t2 = new Thread((DFRSServer)nyServer);
-	        t2.start();
-	        
-	        
-	        Thread t3 = new Thread((DFRSServer)ndServer);
-	        t3.start();
-	        //register the servers on the CORBA
 			try {
 				
 			ORB orb = ORB.init(new String[0],null);
