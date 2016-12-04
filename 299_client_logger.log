@@ -1,0 +1,8 @@
+Nov 22, 2016 6:10:59 PM DFRSApp.Client logUserOperation
+INFO: user performed operation : bookFlight(A,A,A,A,WASHINGTON,11/22,ECONOMY)
+Nov 22, 2016 6:10:59 PM DFRSApp.Client logUserOperation
+INFO: user performed operation : bookFlight result: 123138cc-826d-48b3-862b-d89338d04703
+Nov 22, 2016 6:11:33 PM DFRSApp.Client logUserOperation
+INFO: user performed operation : ENTER transferReservation
+Nov 22, 2016 6:11:33 PM DFRSApp.Client logUserOperation
+INFO: user performed operation : transferReservation(123138cc-826d-48b3-862b-d89338d04703,NEW_DELHI,MONTREAL)

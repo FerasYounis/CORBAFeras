@@ -1,0 +1,15 @@
+module DFRSApp {
+
+
+
+interface DFRS
+{
+
+string bookFlight(in string firstName, in string lastName, in string address, in string phone, in string destination, in string date, in string flightClass);
+string getBookedFlightCount(in string recordType);
+void editFlightRecord(in string recordID, in string fieldName, in string newValue);
+string addFlight(in long economySeatCount, in long businessSeatCount, in long fitClassSeatCount, in string destination, in string date);
+void transferReservation(in string recordId, in string CurrentCity, in string OtherCity );
+void resetCount();
+};
+};

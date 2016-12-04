@@ -1,0 +1,4 @@
+Nov 22, 2016 6:11:10 PM DFRSApp.Manager logUserOperation
+INFO: Manager performed operation : getBookedFlightCount(ECONOMY)
+Nov 22, 2016 6:11:10 PM DFRSApp.Manager logUserOperation
+INFO: Manager performed operation : getBookedFlightCount result: ND 1 +  MTL 0 +  WDC 0
