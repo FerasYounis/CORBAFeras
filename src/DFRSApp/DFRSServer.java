@@ -168,7 +168,7 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 	 * java.lang.String, java.lang.String)
 	 */
 	@Override
-	public synchronized void editFlightRecord(String recordID,
+	public synchronized String editFlightRecord(String recordID,
 			String fieldName, String newValue) {
 		for (Flight flight : flightsList) {
 			if (flight.getRecordId().equals(recordID)) {
@@ -198,6 +198,7 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 				break;
 			}
 		}
+		return "success";
 	}
 
 	/*
@@ -290,6 +291,7 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				aSocket.close();
 			} finally {
 				if (aSocket != null)
 					aSocket.close();
@@ -300,7 +302,7 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 	}
 
 	@Override
-	public synchronized void transferReservation(String recordId, String CurrentCityStr,
+	public synchronized String transferReservation(String recordId, String CurrentCityStr,
 			String OtherCityStr) {
 		City currentCity = City.valueOf(CurrentCityStr);
 		City otherCity = City.valueOf(OtherCityStr);
@@ -315,6 +317,7 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 				removePassenger(recordId);
 			}
 		}
+		return "success";
 
 	}
 

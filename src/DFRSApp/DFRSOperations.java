@@ -19,8 +19,9 @@ public interface DFRSOperations
 
     /**
      * Operation editFlightRecord
+     * @return 
      */
-    public void editFlightRecord(String recordID, String fieldName, String newValue);
+    public String editFlightRecord(String recordID, String fieldName, String newValue);
 
     /**
      * Operation addFlight
@@ -29,8 +30,9 @@ public interface DFRSOperations
 
     /**
      * Operation transferReservation
+     * @return 
      */
-    public void transferReservation(String recordId, String CurrentCity, String OtherCity);
+    public String transferReservation(String recordId, String CurrentCity, String OtherCity);
 
     /**
      * Operation resetCount
