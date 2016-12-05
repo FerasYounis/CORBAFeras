@@ -34,8 +34,8 @@ public class ReplicaManagerMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM3_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM4_lISTENING_PORT,
+					Enums.UDPSender.ReplicaFeras);
 			server.start();
 			// server.executeTestMessage();
 			//server.join();

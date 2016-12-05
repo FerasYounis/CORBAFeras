@@ -62,7 +62,7 @@ public class DFRSCORPAServer implements Runnable {
 			convertObjectToFile(idMontreal, serverName, orb, rootPOA);
 			rootPOA.the_POAManager().activate();
 			System.out.println("THis is the SERVER running");
-			System.out.println("Corba: '" + serverName + "' server is up and running"); 
+			System.out.println("Corba: '" + serverName + "' server :):) is up and running"); 
 			
 			
 		} catch (InvalidName e) {

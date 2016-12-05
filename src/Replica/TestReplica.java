@@ -49,8 +49,8 @@ public class TestReplica {
 
 			byte[] sendData = Serializer.serialize(udpMsg);
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
-					InetAddress.getByName(StaticContent.REPLICA_UMER_IP_ADDRESS),
-					StaticContent.REPLICA_UMER_lISTENING_PORT);
+					InetAddress.getByName(StaticContent.REPLICA_FERAS_IP_ADDRESS),
+					StaticContent.REPLICA_FERAS_lISTENING_PORT);
 			senderSocket.send(sendPacket);
 
 			// Clear Send buffer

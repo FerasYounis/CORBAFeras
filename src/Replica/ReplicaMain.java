@@ -55,8 +55,8 @@ public class ReplicaMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_UMER_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_FERAS_lISTENING_PORT,
+					Enums.UDPSender.ReplicaFeras);
 			server.start();
 
 			createServerObjects(corbaArgs, restoreBackup);
@@ -131,7 +131,7 @@ public class ReplicaMain {
 	private void restoreLogFile(UDPMessage udpMessage)
 	{
 	
-			String msg = Enums.UDPSender.ReplicaUmer + " Restore in process!";
+			String msg = Enums.UDPSender.ReplicaFeras + " Restore in process!";
 			UDPMessage replyMessage = null;
 			
 				switch (udpMessage.getSender()) {
@@ -142,7 +142,7 @@ public class ReplicaMain {
 					System.out.println(msg);
 					clogger.log(msg);
 					
-					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+					replyMessage = new UDPMessage(Enums.UDPSender.ReplicaFeras, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
 					DFRSServer obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());

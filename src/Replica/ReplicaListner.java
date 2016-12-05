@@ -86,7 +86,7 @@ public class ReplicaListner implements Runnable {
 						sequencerNumber++;
 
 						// Reply the caller with ack.
-						ackMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+						ackMessage = new UDPMessage(Enums.UDPSender.ReplicaFeras, udpMessage.getSequencerNumber(),
 								udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 						ackMessage.setStatus(true);
 						byte[] sendData = Serializer.serialize(ackMessage);

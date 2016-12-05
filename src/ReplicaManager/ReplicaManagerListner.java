@@ -105,7 +105,7 @@ public class ReplicaManagerListner implements Runnable {
 
 				if (receivedStatus) {
 					// Send Acknowledge.
-					ackMessage = new UDPMessage(Enums.UDPSender.RMUmer, udpMessage.getSequencerNumber(),
+					ackMessage = new UDPMessage(Enums.UDPSender.RMFeras, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 					ackMessage.setStatus(true);
 					byte[] sendData = Serializer.serialize(ackMessage);

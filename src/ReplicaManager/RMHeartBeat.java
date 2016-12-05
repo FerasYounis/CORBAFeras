@@ -21,20 +21,20 @@ public class RMHeartBeat extends TimerTask {
 		try {
 			socket = new DatagramSocket();
 
-			UDPMessage hearBeatmsg = new UDPMessage(Enums.UDPSender.ReplicaUmer, -1, Enums.FlightCities.Montreal,
+			UDPMessage hearBeatmsg = new UDPMessage(Enums.UDPSender.ReplicaFeras, -1, Enums.FlightCities.Montreal,
 					Enums.Operations.heatBeat, Enums.UDPMessageType.Request);
 
 			byte[] sendData = Serializer.serialize(hearBeatmsg);
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
-					InetAddress.getByName(StaticContent.REPLICA_UMER_IP_ADDRESS),
-					StaticContent.REPLICA_UMER_lISTENING_PORT);
+					InetAddress.getByName(StaticContent.REPLICA_FERAS_IP_ADDRESS),
+					StaticContent.REPLICA_FERAS_lISTENING_PORT);
 
 			socket.send(sendPacket);
 
 			// Sender s = new Sender(StaticContent.REPLICA_UMER_IP_ADDRESS,
 			// StaticContent.REPLICA_UMER_lISTENING_PORT,
 			// false, socket);
-			System.out.println("Sending heartbeat on port: " + StaticContent.REPLICA_UMER_lISTENING_PORT);
+			System.out.println("Sending heartbeat on port: " + StaticContent.REPLICA_FERAS_lISTENING_PORT);
 
 			// socket= new DatagramSocket();
 			try {

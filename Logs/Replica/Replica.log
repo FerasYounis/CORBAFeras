@@ -12,3 +12,27 @@
 2016-12-05T00:12:51.559-05:00 INFO    ReplicaUmer UDP Server Is UP! 
 2016-12-05T00:12:51.894-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
 2016-12-05T00:13:06.875-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:35:16.334-05:00 INFO    Replica is UP! 
+2016-12-05T00:35:16.360-05:00 INFO    ReplicaFeras UDP Server Is UP! 
+2016-12-05T00:35:16.361-05:00 SEVERE  on starting UDP Server 
+2016-12-05T00:35:35.199-05:00 INFO    Replica is UP! 
+2016-12-05T00:35:35.212-05:00 INFO    ReplicaFeras UDP Server Is UP! 
+2016-12-05T00:35:35.749-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:35:50.709-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:36:05.711-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:36:20.712-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:36:35.205-05:00 INFO    Replica is UP! 
+2016-12-05T00:36:35.221-05:00 INFO    ReplicaFeras UDP Server Is UP! 
+2016-12-05T00:36:35.689-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:36:50.646-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:37:05.648-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:37:20.649-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:37:35.651-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:37:50.652-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:38:29.218-05:00 INFO    Replica is UP! 
+2016-12-05T00:38:29.235-05:00 INFO    ReplicaFeras UDP Server Is UP! 
+2016-12-05T00:38:29.785-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:38:44.740-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:38:59.741-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:39:14.743-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T00:39:29.744-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
