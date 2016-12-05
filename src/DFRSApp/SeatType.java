@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 
 public enum SeatType implements Serializable {
-    Economy,
-    Business,
-    First
+    ECONOMY,
+    BUSINESS,
+    FIRST
 }
 // BUSINESS,
 //FIT

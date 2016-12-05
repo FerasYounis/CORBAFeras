@@ -16,15 +16,15 @@ public class ClientThread implements Runnable{
                 Thread.sleep((int)(Math.random() * 1000));
                 // Print a message
                 if(user.getUserType() == SystemUserType.MANAGER){
-                    proxy.getBookedFlightCount(user,SeatType.Economy);
+                    proxy.getBookedFlightCount(user,SeatType.ECONOMY);
 
                 }
                 else{
                     if(user.getLocation() != City.MONTREAL) {
-                        String recordId = proxy.bookFlight(user, "first", "last", "address", "phone", City.MONTREAL, "10/10", SeatType.Economy);
+                        String recordId = proxy.bookFlight(user, "first", "last", "address", "phone", City.MONTREAL, "10/10", SeatType.ECONOMY);
                     }
                     else {
-                        String recordId2 = proxy.bookFlight(user, "first2", "last2", "address2", "phone2", City.NEW_DELHI, "10/10", SeatType.Economy);
+                        String recordId2 = proxy.bookFlight(user, "first2", "last2", "address2", "phone2", City.NEW_DELHI, "10/10", SeatType.ECONOMY);
                     }
 
                     //proxy.transferReservation(user, recordId, user.getLocation().toString(), City.NEW_DELHI.toString());

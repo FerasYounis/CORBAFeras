@@ -134,3 +134,9 @@
 2016-12-05T01:21:32.006-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
 2016-12-05T01:21:39.574-05:00 INFO    Executing Opernation : bookFlight, on Server :Montreal 
 2016-12-05T01:21:39.582-05:00 SEVERE  on starting UDP Server 
+2016-12-05T10:45:23.291-05:00 INFO    Replica is UP! 
+2016-12-05T10:45:23.293-05:00 INFO    ReplicaFeras UDP Server Is UP! 
+2016-12-05T10:45:23.515-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T10:45:38.511-05:00 INFO    Executing Opernation : heatBeat, on Server :Montreal 
+2016-12-05T10:45:41.455-05:00 INFO    Executing Opernation : bookFlight, on Server :Montreal 
+2016-12-05T10:45:41.456-05:00 SEVERE  on starting UDP Server 

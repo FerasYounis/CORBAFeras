@@ -78,7 +78,13 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 		else {
 			destination = City.NEW_DELHI;}
 		
-		SeatType flightClass = SeatType.valueOf(flightClassStr);
+		SeatType flightClass;
+			if (flightClassStr.toUpperCase().equals(SeatType.BUSINESS)){
+				flightClass = SeatType.BUSINESS;}
+			if (flightClassStr.toUpperCase().equals(SeatType.ECONOMY)){
+				flightClass = SeatType.ECONOMY;}
+			else {flightClass = SeatType.FIRST;}
+			
 		for (Flight flight : flightsList) {
 
 			if (flight.getDate().equals(date)
@@ -262,12 +268,12 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 							"getBookedFlightCount".length() + 1);
 					if (recordTypeStr.equals("0")) {
 						answer = this
-								.getBookedFlightCountLoical(SeatType.Economy);
+								.getBookedFlightCountLoical(SeatType.ECONOMY);
 					} else if (recordTypeStr.equals("1")) {
 						answer = this
-								.getBookedFlightCountLoical(SeatType.Business);
+								.getBookedFlightCountLoical(SeatType.BUSINESS);
 					} else {
-						answer = this.getBookedFlightCountLoical(SeatType.First);
+						answer = this.getBookedFlightCountLoical(SeatType.FIRST);
 					}
 					DatagramPacket reply = new DatagramPacket(
 							answer.getBytes(), answer.length(),
