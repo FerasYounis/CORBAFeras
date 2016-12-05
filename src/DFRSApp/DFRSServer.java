@@ -70,7 +70,14 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 	public String bookFlight(String firstName, String lastName, String address,
 			String phone, String destinationStr, String date,
 			String flightClassStr) {
-		City destination = City.valueOf(destinationStr);
+		City destination;
+		if (destinationStr.equals("Montreal")){
+			destination = City.MONTREAL;}
+		if(destinationStr.equals("Washington")){
+			destination = City.WASHINGTON;}
+		else {
+			destination = City.NEW_DELHI;}
+		
 		SeatType flightClass = SeatType.valueOf(flightClassStr);
 		for (Flight flight : flightsList) {
 
@@ -255,12 +262,12 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 							"getBookedFlightCount".length() + 1);
 					if (recordTypeStr.equals("0")) {
 						answer = this
-								.getBookedFlightCountLoical(SeatType.ECONOMY);
+								.getBookedFlightCountLoical(SeatType.Economy);
 					} else if (recordTypeStr.equals("1")) {
 						answer = this
-								.getBookedFlightCountLoical(SeatType.BUSINESS);
+								.getBookedFlightCountLoical(SeatType.Business);
 					} else {
-						answer = this.getBookedFlightCountLoical(SeatType.FIT);
+						answer = this.getBookedFlightCountLoical(SeatType.First);
 					}
 					DatagramPacket reply = new DatagramPacket(
 							answer.getBytes(), answer.length(),
@@ -478,12 +485,15 @@ private byte[] combineArrays(byte[] one, byte[] two){
 		DFRSServer server = null;
 		if(serverName.equalsIgnoreCase("montreal")){
 			server = new DFRSServer(City.MONTREAL);
+			System.out.println("CORBA ' "+serverName+"' is init:) :) :) This is not the RM!!");
 		}
 		else if(serverName.equalsIgnoreCase("washington")){
 			server = new DFRSServer(City.WASHINGTON);
+			System.out.println("CORBA ' "+serverName+"' is init:) :) :) This is not the RM!!");
 		}
 		else{
 			server = new DFRSServer(City.NEW_DELHI);
+			System.out.println("CORBA ' "+serverName+"' is init:) :) :) This is not the RM!!");
 		}
 		try{
 			POA rootPOA;

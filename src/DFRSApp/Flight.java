@@ -86,20 +86,20 @@ public class Flight {
     }
 
     public synchronized int incrementReservedCount(SeatType seatType) {
-        if (seatType == SeatType.BUSINESS) {
+        if (seatType == SeatType.Business) {
             this.businessSeatReserved++;
             return businessSeatReserved;
-        } else if (seatType == SeatType.ECONOMY) {
+        } else if (seatType == SeatType.Economy) {
             this.economySeatReserved++;
             return economySeatReserved;
-        } else if (seatType == SeatType.FIT) {
+        } else if (seatType == SeatType.First) {
             this.fitClassSeatReserved++;
             return fitClassSeatReserved;
         }
         return 0;
     }
     public synchronized int decrementReservedCount(SeatType seatType) {
-        if (seatType == SeatType.BUSINESS) {
+        if (seatType == SeatType.Business) {
             if(businessSeatReserved >1) {
                 this.businessSeatReserved--;
             }
@@ -107,7 +107,7 @@ public class Flight {
                 businessSeatReserved = 0;
             }
             return businessSeatReserved;
-        } else if (seatType == SeatType.ECONOMY) {
+        } else if (seatType == SeatType.Economy) {
             if(economySeatReserved >1) {
                 this.economySeatReserved--;
             }
@@ -115,7 +115,7 @@ public class Flight {
                 economySeatReserved = 0;
             }
             return economySeatReserved;
-        } else if (seatType == SeatType.FIT) {
+        } else if (seatType == SeatType.First) {
             if(fitClassSeatReserved >1) {
                 this.fitClassSeatReserved--;
             }
@@ -127,21 +127,21 @@ public class Flight {
         return 0;
     }
     public int getReservedCount(SeatType seatType) {
-        if (seatType == SeatType.BUSINESS) {
+        if (seatType == SeatType.Business) {
             return businessSeatReserved;
-        } else if (seatType == SeatType.ECONOMY) {
+        } else if (seatType == SeatType.Economy) {
             return economySeatReserved;
-        } else if (seatType == SeatType.FIT) {
+        } else if (seatType == SeatType.First) {
             return fitClassSeatReserved;
         }
         return 0;
     }
     public synchronized boolean canReserved(SeatType seatType) {
-        if (seatType == SeatType.BUSINESS) {
+        if (seatType == SeatType.Business) {
             return businessSeatReserved < businessSeatCount;
-        } else if (seatType == SeatType.ECONOMY) {
+        } else if (seatType == SeatType.Economy) {
             return economySeatReserved < economySeatCount;
-        } else if (seatType == SeatType.FIT) {
+        } else if (seatType == SeatType.First) {
             return fitClassSeatReserved < fitClassSeatCount;
         }
         return false;
