@@ -37,6 +37,8 @@ public class DFRSServer extends DFRSPOA implements Runnable {
 	private DatagramSocket aSocket = null;
 	private InetAddress aHost = null;
 	int serverPort = 6789;
+	ORB orb = null;
+	Thread udpServerThread = null;
 
 	public DFRSServer(City serverCity) {
 		this.serverCity = serverCity;
@@ -451,11 +453,9 @@ private byte[] combineArrays(byte[] one, byte[] two){
 		return newArray;
 	}
 
-	public void shutDownServer(){
 
-	}
 	public void startServer(String serverName, String UDPPort, String[] orbArgs)  {
-		ORB orb = ORB.init(orbArgs, null);
+		orb = ORB.init(orbArgs, null);
 		DFRSServer server = null ;
 		try {
 			server= initServer(orb,orbArgs,serverName);
@@ -465,7 +465,8 @@ private byte[] combineArrays(byte[] one, byte[] two){
 			e.printStackTrace();
 		}
 
-		new Thread(server).start();
+		udpServerThread = new Thread(server);
+		udpServerThread.start();
 		Thread orbRunThread = new Thread(new Runnable() {
 				   public void run() {
 					   orb.run();
@@ -526,5 +527,14 @@ private byte[] combineArrays(byte[] one, byte[] two){
 		file.print(ior);
 		file.close();
 	}
-
+	public void shutDownServer()
+	{  if(udpServerThread != null)
+	{
+		aSocket.close();
+		udpServerThread.stop();
+	}  if(orb != null)
+	{
+		orb.shutdown(false);
+	}
+	}
 }
