@@ -1,9 +1,11 @@
 package ReplicaManager;
 
+import java.util.Timer;
 import java.util.logging.Logger;
 
 import Models.Enums;
 import Replica.ReplicaListner;
+import Replica.ReplicaMain;
 import StaticContent.StaticContent;
 import Utilities.CLogger;
 
@@ -19,25 +21,42 @@ import Utilities.CLogger;
 public class ReplicaManagerMain {
 	private static CLogger clogger;
 	private final static Logger LOGGER = Logger.getLogger(ReplicaManagerMain.class.getName());
+	public static boolean isReplicaAlive = true;
+	public static ReplicaMain myReplicaInstance = null;
 
 	public static void main(String[] args) {
 		String msg = "";
 		try {
 			// initialize logger
 			clogger = new CLogger(LOGGER, "ReplicaManager/ReplicaManager.log");
-			msg = "Replica is UP!";
+			msg = "ReplicaManager is UP!";
 			clogger.log(msg);
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.REPLICA_ULAN_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUlan);
+			ReplicaManagerListner server = new ReplicaManagerListner(clogger, StaticContent.RM3_lISTENING_PORT,
+					Enums.UDPSender.ReplicaUmer);
 			server.start();
 			// server.executeTestMessage();
-			server.join();
+			//server.join();
+
+			if (myReplicaInstance == null)
+				myReplicaInstance = new ReplicaMain(false);
+
+			RMHeartBeat heatBeat = new RMHeartBeat();
+			Timer timer = new Timer();
+			timer.schedule(heatBeat, 0, 15000);
 
 		} catch (Exception e) {
 			System.out.println("Sequencer Exception: " + e.getMessage());
+		}
+	}
+
+	public static void restartReplica() {
+		if (isReplicaAlive == false) {
+			myReplicaInstance.shutDownReplica();
+			myReplicaInstance = null;
+			myReplicaInstance = new ReplicaMain(true);
 		}
 	}
 }

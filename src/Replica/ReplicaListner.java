@@ -1,14 +1,26 @@
 package Replica;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import DFRSApp.DFRSServer;
 import Models.Enums;
 import Models.UDPMessage;
-import StaticContent.StaticContent;
+import ReliableUDP.Reciever;
+import ReliableUDP.Sender;
+
+import StaticContent.*;
 import Utilities.CLogger;
 import Utilities.Serializer;
 
@@ -22,12 +34,14 @@ import Utilities.Serializer;
 
 public class ReplicaListner implements Runnable {
 	private CLogger clogger;
-	private DatagramSocket serverSocket;
 	private Thread t = null;
 	private boolean continueUDP = true;
-	private long sequencerNumber = 0;
+	public static long sequencerNumber = 0;
 	int port = 0;
 	Enums.UDPSender machineName;
+	boolean fromSequencer = false;
+	boolean isWriteToTransactions = true;
+	DatagramSocket recSocket;
 
 	public ReplicaListner(CLogger clogger, int port, Enums.UDPSender machineName) {
 		this.clogger = clogger;
@@ -38,46 +52,74 @@ public class ReplicaListner implements Runnable {
 	@Override
 	public void run() {
 		try {
-			serverSocket = new DatagramSocket(port);
-			byte[] receiveData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
-			// byte[] sendData = new byte[SIZE_BUFFER_REQUEST];
 			String msg = machineName.toString() + " UDP Server Is UP!";
 
 			System.out.println(msg);
 			clogger.log(msg);
+			recSocket = new DatagramSocket(this.port);
+			System.out.println("Replica Listner Port: " + port);
+			byte[] receiveData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
+
 			while (continueUDP) {
 
-				// Read request
+				// Reciever r = new Reciever(port,
+				// StaticContent.SEQUENCER_ACK_PORT_FOR_REPLICA_ULAN);
+				// Reciever r = new Reciever(recSocket);
+				// UDPMessage udpMessage = r.getData();
+
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-				serverSocket.receive(receivePacket);
+				recSocket.receive(receivePacket);
 
 				byte[] message = Arrays.copyOf(receivePacket.getData(), receivePacket.getLength());
 				UDPMessage udpMessage = Serializer.deserialize(message);
 				UDPMessage ackMessage = null;
-				UDPMessage replyMessage = null;
 				// Clear received buffer
 				receiveData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
 				boolean receivedStatus = false;
+
+				if (!udpMessage.getOpernation().equals(Enums.Operations.heatBeat)) {
+					long tempSeq = sequencerNumber + 1;
+					if (tempSeq != udpMessage.getSequencerNumber()) {
+						continue;
+					} else {
+						// Increment the sequence number.
+						sequencerNumber++;
+
+						// Reply the caller with ack.
+						ackMessage = new UDPMessage(Enums.UDPSender.ReplicaUmer, udpMessage.getSequencerNumber(),
+								udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
+						ackMessage.setStatus(true);
+						byte[] sendData = Serializer.serialize(ackMessage);
+						DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
+								receivePacket.getAddress(), receivePacket.getPort());
+						recSocket.send(sendPacket);
+
+						// Clear Send buffer
+						sendData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
+					}
+				}
+
+				UDPMessage replyMessage = null;
+
 				switch (udpMessage.getSender()) {
 				case Sequencer:
-					receivedStatus = true;
+					isWriteToTransactions = true;
+					fromSequencer = true;
 					// Perform Operations.
 					msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :"
 							+ udpMessage.getServerName();
 					System.out.println(msg);
 					clogger.log(msg);
-					ackMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
-							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
 					replyMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 
-					//FlightServer obj = ReplicaMain.servers.get(udpMessage.getServerName());
-					DFRSServer obj = ReplicaMain.servers.get(udpMessage.getServerName());
+					DFRSServer obj = ReplicaMain.servers.get(udpMessage.getServerName().toString());
 					String res = "";
 					switch (udpMessage.getOpernation()) {
 
 					case bookFlight:
+
 						res = obj.bookFlight(udpMessage.getParamters().get("firstName"),
 								udpMessage.getParamters().get("lastName"), udpMessage.getParamters().get("address"),
 								udpMessage.getParamters().get("phone"), udpMessage.getParamters().get("destination"),
@@ -88,6 +130,7 @@ public class ReplicaListner implements Runnable {
 						break;
 
 					case getBookedFlightCount:
+
 						res = obj.getBookedFlightCount(udpMessage.getParamters().get("recordType"));
 
 						replyMessage.setReplyMsg(res);
@@ -102,6 +145,7 @@ public class ReplicaListner implements Runnable {
 						break;
 
 					case transferReservation:
+
 						res = obj.transferReservation(udpMessage.getParamters().get("passengerID"),
 								udpMessage.getParamters().get("currentCity"),
 								udpMessage.getParamters().get("otherCity"));
@@ -111,48 +155,83 @@ public class ReplicaListner implements Runnable {
 					}
 					break;
 
-				case RMUlan:
-				case RMSajjad:
-				case RMUmer:
-				case RMFeras:
-					receivedStatus = true;
-					msg = udpMessage.getSender().toString() + " Server contacted for HeartBeat.";
+				case ReplicaUlan:
+				case ReplicaSajjad:
+				case ReplicaUmer:
+				case ReplicaFeras:
+					msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :"
+							+ udpMessage.getServerName();
 					System.out.println(msg);
 					clogger.log(msg);
-					ackMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
+
+					fromSequencer = false;
+					replyMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
 							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
+
+					replyMessage.setStatus(true);
+
 					break;
 
 				default:
 					msg = "Unknow Sender : " + udpMessage.getSender();
 					System.out.println(msg);
 					clogger.log(msg);
+					isWriteToTransactions = false;
 					break;
 				}
 
-				if (receivedStatus) {
-					// Send Acknowledge.
-					ackMessage.setStatus(true);
-					byte[] sendData = Serializer.serialize(ackMessage);
+				// if it is a valid request from sequencer or RM, write its
+				// transaction log for recovery.
+				if (isWriteToTransactions) {
+					serializeTransaction(udpMessage, String.valueOf(sequencerNumber));
+				}
+
+				if (fromSequencer) {
+					DatagramSocket senderSocket = new DatagramSocket();
+
+					
+					byte[] sendData = Serializer.serialize(replyMessage);
 					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
-							receivePacket.getAddress(), receivePacket.getPort());
-					serverSocket.send(sendPacket);
+							InetAddress.getByName(StaticContent.FRONT_END_IP_ADDRESS), udpMessage.getFrontEndPort());
+					senderSocket.send(sendPacket);
 
 					// Clear Send buffer
 					sendData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
 
-					// Send reply to FE
-					replyMessage.setStatus(true);
-					sendData = Serializer.serialize(replyMessage);
-					InetAddress IPAddress = InetAddress.getByName(StaticContent.FRONT_END_IP_ADDRESS);
-					sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress,
-							StaticContent.FRONT_END_lISTENING_PORT);
-					serverSocket.send(sendPacket);
+					senderSocket.close();
+
+					// Sender s = new Sender(StaticContent.FRONT_END_IP_ADDRESS,
+					// udpMessage.getFrontEndPort(), false,
+					// senderSocket);
+					// if (s.send(replyMessage)) {
+					// // release Port
+					// if (senderSocket != null && !senderSocket.isClosed())
+					// senderSocket.close();
+					// }
+
+				} else {
+					// heartbeat reply is already sent by the protocol. no need
+					// to reply again.
+					System.out.print("Replica: Replying HeartBeat.");
+					DatagramSocket senderSocket = new DatagramSocket();
+
+					byte[] sendData = Serializer.serialize(replyMessage);
+					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
+							receivePacket.getAddress(), receivePacket.getPort());
+					senderSocket.send(sendPacket);
+
+					// Clear Send buffer
+					sendData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
+
+					senderSocket.close();
+
 				}
+
 			}
 		} catch (Exception ex) {
 			clogger.logException("on starting UDP Server", ex);
 			ex.printStackTrace();
+			recSocket.close();
 		}
 
 	}
@@ -182,6 +261,15 @@ public class ReplicaListner implements Runnable {
 	 */
 	public void stop() {
 		continueUDP = false;
+	}
+
+	public static void serializeTransaction(Object obj, String fName) throws IOException {
+		String fileName = StaticContent.RM_TRANSACTION_LOGS_PATH + fName + ".obj";
+		FileOutputStream fos = new FileOutputStream(fileName);
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		oos.writeObject(obj);
+		oos.close();
 	}
 
 }

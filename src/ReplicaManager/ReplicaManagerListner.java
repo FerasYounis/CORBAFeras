@@ -17,6 +17,7 @@ public class ReplicaManagerListner implements Runnable {
 	private boolean continueUDP = true;
 	int port = 0;
 	Enums.UDPSender machineName;
+	private int softwareFailureCount = 0;
 
 	public ReplicaManagerListner(CLogger clogger, int port, Enums.UDPSender machineName) {
 		this.clogger = clogger;
@@ -30,7 +31,7 @@ public class ReplicaManagerListner implements Runnable {
 			serverSocket = new DatagramSocket(port);
 			byte[] receiveData = new byte[StaticContent.UDP_REQUEST_BUFFER_SIZE];
 			// byte[] sendData = new byte[SIZE_BUFFER_REQUEST];
-			String msg = machineName.toString() + " UDP Server Is UP!";
+			String msg = machineName.toString() + " Manager UDP Server Is UP!";
 
 			System.out.println(msg);
 			clogger.log(msg);
@@ -48,26 +49,51 @@ public class ReplicaManagerListner implements Runnable {
 				boolean receivedStatus = false;
 				switch (udpMessage.getSender()) {
 				case FrontEnd:
+
 					receivedStatus = true;
-					// Perform Operations.
-					msg = "Executing Opernation : " + udpMessage.getOpernation() + ", on Server :"
-							+ udpMessage.getServerName();
-					System.out.println(msg);
-					clogger.log(msg);
-					ackMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
-							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
+					if (udpMessage.getFrontEndIP().equals(StaticContent.RM3_IP_ADDRESS)
+							&& udpMessage.getFrontEndPort() == StaticContent.RM3_lISTENING_PORT) {
+						switch (udpMessage.getOpernation()) {
+
+						case softwareFailure:
+							// ifSoftware Failure
+							softwareFailureCount++;
+							if (softwareFailureCount >= 3) {
+								// Restart the server.
+								softwareFailureCount = 0;
+								ReplicaManager.ReplicaManagerMain.restartReplica();
+							}
+							break;
+
+						case hardwareFailure:
+							// Hardware failure occured.
+							softwareFailureCount = 0;
+							ReplicaManager.ReplicaManagerMain.restartReplica();
+							break;
+
+						default:
+							msg = "Unknow Sender : " + udpMessage.getSender();
+							System.out.println(msg);
+							clogger.log(msg);
+							break;
+
+						}
+					}
+
 					break;
 
 				case RMUlan:
 				case RMSajjad:
 				case RMUmer:
 				case RMFeras:
-					receivedStatus = true;
-					msg = udpMessage.getSender().toString() + " Server contacted for HeartBeat.";
-					System.out.println(msg);
-					clogger.log(msg);
-					ackMessage = new UDPMessage(this.machineName, udpMessage.getSequencerNumber(),
-							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
+
+					switch (udpMessage.getOpernation()) {
+					case heatBeat:
+
+						break;
+
+					}
+
 					break;
 
 				default:
@@ -79,6 +105,8 @@ public class ReplicaManagerListner implements Runnable {
 
 				if (receivedStatus) {
 					// Send Acknowledge.
+					ackMessage = new UDPMessage(Enums.UDPSender.RMUmer, udpMessage.getSequencerNumber(),
+							udpMessage.getServerName(), udpMessage.getOpernation(), Enums.UDPMessageType.Reply);
 					ackMessage.setStatus(true);
 					byte[] sendData = Serializer.serialize(ackMessage);
 					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
