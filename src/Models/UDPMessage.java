@@ -134,11 +134,11 @@ public class UDPMessage implements Serializable {
 			SeatType flightClass;
 			String flightClassStr = paramters.get("classFlight");
 			if (flightClassStr.toUpperCase().equals(SeatType.BUSINESS)){
-			flightClass = SeatType.BUSINESS;}
+				paramters.put("classFlight", "BUSINESS");}
 			if (flightClassStr.toUpperCase().equals(SeatType.ECONOMY)){
-			flightClass = SeatType.ECONOMY;}
-			else {flightClass = SeatType.FIRST;}
-			paramters.put("classFlight", SeatType.name());
+				paramters.put("classFlight", "ECONOMY");}
+			else {paramters.put("classFlight", "FIRST");}
+			
 			}
 
 			return paramters;
