@@ -41,8 +41,8 @@ public class ReplicaMain {
 			System.out.println(msg);
 
 			// Start UDP Server
-			ReplicaListner server = new ReplicaListner(clogger, StaticContent.RM3_lISTENING_PORT,
-					Enums.UDPSender.ReplicaUmer);
+			ReplicaListner server = new ReplicaListner(clogger, StaticContent.RM4_lISTENING_PORT,
+					Enums.UDPSender.ReplicaFeras);
 			server.start();
 
 			createServerObjects(corbaArgs);
