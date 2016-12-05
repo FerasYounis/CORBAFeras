@@ -129,7 +129,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation editFlightRecord
      */
-    public void editFlightRecord(String recordID, String fieldName, String newValue)
+    public String editFlightRecord(String recordID, String fieldName, String newValue)
     {
         while(true)
         {
@@ -143,7 +143,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
                     _output.write_string(fieldName);
                     _output.write_string(newValue);
                     _input = this._invoke(_output);
-                    return;
+                    return "success!";
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
                 {
@@ -168,7 +168,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     _self.editFlightRecord( recordID,  fieldName,  newValue);
-                    return;
+                    return "success!";
                 }
                 finally
                 {
@@ -235,7 +235,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
     /**
      * Operation transferReservation
      */
-    public void transferReservation(String recordId, String CurrentCity, String OtherCity)
+    public String transferReservation(String recordId, String CurrentCity, String OtherCity)
     {
         while(true)
         {
@@ -249,7 +249,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
                     _output.write_string(CurrentCity);
                     _output.write_string(OtherCity);
                     _input = this._invoke(_output);
-                    return;
+                    return "success!";
                 }
                 catch(org.omg.CORBA.portable.RemarshalException _exception)
                 {
@@ -274,7 +274,7 @@ public class _DFRSStub extends org.omg.CORBA.portable.ObjectImpl
                 try
                 {
                     _self.transferReservation( recordId,  CurrentCity,  OtherCity);
-                    return;
+                    return "success";
                 }
                 finally
                 {
