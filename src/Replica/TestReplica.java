@@ -30,9 +30,9 @@ public class TestReplica {
 			parameterMap.put("lastName", "Baitassov");
 			parameterMap.put("address", "Verdun");
 			parameterMap.put("phone", "5145606164");
-			parameterMap.put("destination", "Washington");
+			parameterMap.put("destination", "WASHINGTON");
 			parameterMap.put("date", "02/12/2016");
-			parameterMap.put("classFlight", "economy");
+			parameterMap.put("classFlight", "ECONOMY");
 			udpMsg.setParamters(parameterMap);
 			udpMsg.setManagerID("-1");
 			udpMsg.setFrontEndPort(400);

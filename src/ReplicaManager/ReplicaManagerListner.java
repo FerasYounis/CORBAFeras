@@ -51,8 +51,8 @@ public class ReplicaManagerListner implements Runnable {
 				case FrontEnd:
 
 					receivedStatus = true;
-					if (udpMessage.getFrontEndIP().equals(StaticContent.RM3_IP_ADDRESS)
-							&& udpMessage.getFrontEndPort() == StaticContent.RM3_lISTENING_PORT) {
+					if (udpMessage.getFrontEndIP().equals(StaticContent.RM4_IP_ADDRESS)
+							&& udpMessage.getFrontEndPort() == StaticContent.RM4_lISTENING_PORT) {
 						switch (udpMessage.getOpernation()) {
 
 						case softwareFailure:

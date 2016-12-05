@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.HashMap;
 
+import DFRSApp.City;
+import DFRSApp.SeatType;
 import Models.Enums.FlightCities;
 import Models.Enums.Operations;
 import Models.Enums.UDPMessageType;
@@ -115,7 +117,31 @@ public class UDPMessage implements Serializable {
 	 * @return the paramters
 	 */
 	public HashMap<String, String> getParamters() {
-		return paramters;
+		if (paramters.get("destination") != null) {
+			String destinationStr = paramters.get("destination");
+			City destination;
+			if (destinationStr.equals("Montreal")) {
+			destination = City.MONTREAL;
+			}
+			if (destinationStr.equals("Washington")) {
+			destination = City.WASHINGTON;
+			} else {
+			destination = City.NEW_DELHI;
+			}
+			paramters.put("destination", destination.name());
+			}
+			if (paramters.get("classFlight") != null) {
+			SeatType flightClass;
+			String flightClassStr = paramters.get("classFlight");
+			if (flightClassStr.toUpperCase().equals(SeatType.BUSINESS)){
+			flightClass = SeatType.BUSINESS;}
+			if (flightClassStr.toUpperCase().equals(SeatType.ECONOMY)){
+			flightClass = SeatType.ECONOMY;}
+			else {flightClass = SeatType.FIRST;}
+			paramters.put("classFlight", SeatType.name());
+			}
+
+			return paramters;
 	}
 
 	/**
