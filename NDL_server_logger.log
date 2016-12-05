@@ -1,4 +1,0 @@
-Dec 04, 2016 1:20:53 AM DFRSApp.DFRSServer bookFlight
-INFO: bookFlight : Passenger{firstName='feras', lastName='youni', address='2222', phone='2222', destination='WASHINGTON', date='11/11', flightClass='ECONOMY', recordId='1'}
-Dec 04, 2016 1:20:53 AM DFRSApp.DFRSServer bookFlight
-INFO: bookFlight : Passenger{firstName='ferasnd', lastName='younind', address='3333', phone='3333', destination='WASHINGTON', date='11/11', flightClass='ECONOMY', recordId='2'}

@@ -466,7 +466,11 @@ private byte[] combineArrays(byte[] one, byte[] two){
 		}
 
 		new Thread(server).start();
-		orb.run();
+		Thread orbRunThread = new Thread(new Runnable() {
+				   public void run() {
+					   orb.run();
+						   }
+					  });
 
 	}
 	public DFRSServer initServer(ORB orb, String[] args, String serverName) throws InvalidName, AdapterInactive,   ServantNotActive, WrongPolicy, org.omg.CosNaming.NamingContextPackage.InvalidName, NotFound, CannotProceed {
